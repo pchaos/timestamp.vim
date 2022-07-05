@@ -207,7 +207,7 @@ function s:subst(start, end, pat, rep)
 			let curline = getline(lineno)
 			if match(curline, a:pat) != -1
 					" let newline = substitute( curline, a:pat, a:rep, '' )
-					echo corline  a:pat
+					echo curline  a:pat
 					let newline = py3eval("insert_timestamp.substitute_python( 'curline', 'a:pat', 'a:rep')")
 					if( newline != curline )
 						" Only substitute if we made a change
