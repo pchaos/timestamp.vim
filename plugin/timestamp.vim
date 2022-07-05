@@ -1,7 +1,7 @@
 " TimeStamp 1.21: Vim plugin for automated time stamping.
 " Maintainer:	Gautam Iyer <gi1242ATusersDOTsourceforgeDOTnet>
 " Created:	Fri 06 Feb 2004 02:46:27 PM CST
-" Modified:	Wed 25 Mar 2009 03:28:34 PM PDT
+" Modified:	二 05 7月 2022 10:27:57 上午 PST
 " License:	This file is placed in the public domain.
 "
 " Credits:	Thanks to Guido Van Hoecke for writing the original vim script
@@ -167,6 +167,11 @@ endfunction
 
 " {{{1 subst( start, end, pat, rep): substitute on range start - end.
 function s:subst(start, end, pat, rep)
+    " make sure this buffer is really in need of timestamp update
+    if &modified == 0
+        return
+    endif
+
     let lineno = a:start
     while lineno <= a:end
 	let curline = getline(lineno)
