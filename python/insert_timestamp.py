@@ -1,6 +1,6 @@
 """insert timestamp
 
--1
+odified:  2022-07-05T15:43:40
 """
 
 import datetime
@@ -156,7 +156,7 @@ def substitute_python(str, patttern, replace, err_return=''):
 df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
 """
     try:
-        print(f"{str},{patttern}, {replace},{err_return}")
+        print(f"{str},{patttern},{replace},{err_return}")
         text_after = re.sub(patttern, replace, str)
     except Exception as e:
         text_after=err_return
