@@ -4,6 +4,7 @@ odified:  2022-07-05T15:43:40
 """
 
 import datetime
+import time
 
 try:
     import parsedatetime
@@ -157,6 +158,7 @@ df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", re
 """
     try:
         print(f"{str},{patttern},{replace},{err_return}")
+        time.sleep(2)
         text_after = re.sub(patttern, replace, str)
     except Exception as e:
         text_after=err_return
