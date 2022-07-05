@@ -1,7 +1,7 @@
 " TimeStamp 1.21: Vim plugin for automated time stamping.
 " Maintainer:	Gautam Iyer <gi1242ATusersDOTsourceforgeDOTnet>
 " Created:	Fri 06 Feb 2004 02:46:27 PM CST
-" Modified:  2022-07-05T15:43:40
+-1
 " License:	This file is placed in the public domain.
 "
 " Credits:	Thanks to Guido Van Hoecke for writing the original vim script
@@ -204,17 +204,17 @@ function s:subst(start, end, pat, rep)
 
     let lineno = a:start
     while lineno <= a:end
-	let curline = getline(lineno)
-	if match(curline, a:pat) != -1
-	    " let newline = substitute( curline, a:pat, a:rep, '' )
-	    let newline = py3eval('insert_timestamp.substitute_python( curline, a:pat, a:rep, "" )')
-	    if( newline != curline )
-		" Only substitute if we made a change
-		"silent! undojoin
-		keepjumps call setline(lineno, newline)
-	    endif
-	endif
-	let lineno = lineno + 1
+			let curline = getline(lineno)
+			if match(curline, a:pat) != -1
+					" let newline = substitute( curline, a:pat, a:rep, '' )
+					let newline = py3eval("insert_timestamp.substitute_python( 'curline', 'a:pat', 'a:rep')")
+					if( newline != curline )
+				" Only substitute if we made a change
+				"silent! undojoin
+				keepjumps call setline(lineno, newline)
+					endif
+			endif
+			let lineno = lineno + 1
     endwhile
 endfunction
 " }}}1
