@@ -1,7 +1,7 @@
 " TimeStamp 1.21: Vim plugin for automated time stamping.
 " Maintainer:	Gautam Iyer <gi1242ATusersDOTsourceforgeDOTnet>
 " Created:	Fri 06 Feb 2004 02:46:27 PM CST
-" Modified:	二 05 7月 2022 10:27:57 上午 PST
+" Modified:  2022-07-05T15:43:40
 " License:	This file is placed in the public domain.
 "
 " Credits:	Thanks to Guido Van Hoecke for writing the original vim script
@@ -14,6 +14,11 @@
 "   "token_substitution" on "timestamp_rep" and passing the result to
 "   "strftime()". See the documentation for details.
 
+if !has("python3")
+    echo "vim has to be compiled with +python3 to run this"
+    finish
+endif
+
 " provide load control
 if exists("loaded_timestamp")
     finish
@@ -23,25 +28,47 @@ let loaded_timestamp = 1
 let s:cpo_save = &cpo
 set cpo&vim		" line continuation is used
 
+if !exists('g:insert_timestamp_enable_timezone')
+  let g:insert_timestamp_enable_timezone = 0
+endif
+
+" python import insert_timestamp
+let s:plugin_root = expand('<sfile>:p:h:h')
+let s:python_root = s:plugin_root . '/python'
+
+python3 << EOF
+import os.path, sys, vim
+#sys.path.insert(0, os.path.join(vim.eval('s:third_party_root')))
+sys.path.insert(0, os.path.join(vim.eval('s:python_root')))
+import insert_timestamp
+EOF
+
+let s:dt = py3eval('insert_timestamp.parse("")')
+if g:insert_timestamp_enable_timezone
+	let s:tz = py3eval('insert_timestamp.get_local_tz()')
+	let s:dt = s:dt . ' (' . s:tz . ')'
+endif
+echo s:dt
+
 " {{{1 getValue( deflt, globl, alternates...): Get value of a script variable
 function s:getValue(deflt, globl, ...)
     " If the global variable globl exists, return that. Otherwise, return the
     " first non-empty arguement. If none exists, return deflt.
     " If globl is "NONE" then don't look for a global variable.
-    if a:globl != 'NONE' && exists(a:globl)
-	return {a:globl}
-    else
-	let indx = 1
-	while indx <= a:0
-	    if a:{indx} != ""
-		return a:{indx}
-	    endif
-	    let indx = indx + 1
-	endwhile
-    endif
+	if a:globl != 'NONE' && exists(a:globl)
+		return {a:globl}
+	else
+		let indx = 1
+		while indx <= a:0
+				if a:{indx} != ""
+			return a:{indx}
+				endif
+				let indx = indx + 1
+		endwhile
+	endif
 
-    " No non-empty arguements. Return default.
-    return a:deflt 
+	" No non-empty arguements. Return default.
+	return a:deflt 
 endfunction
 
 " {{{1 initialise() Function to initialise script variables.
@@ -50,10 +77,13 @@ function s:initialise()
     " timestamped. Speeds up the vim load time.
 
     " Default timestamp expressions
-    let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}%(\s+[AP]M)?%(\s+\a+)?|TIMESTAMP', 'g:timestamp_regexp')
+    " let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}%(\s+[AP]M)?%(\s+\a+)?|TIMESTAMP', 'g:timestamp_regexp')
+		# yyyy-mm-dd HH:mm:SS
+    let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP', 'g:timestamp_regexp')
 
     " %c seems to be different on different systems. Use a full form instead.
-    let s:timestamp_rep = s:getValue('%a %d %b %Y %I:%M:%S %p %Z', 'g:timestamp_rep')
+    " let s:timestamp_rep = s:getValue('%a %d %b %Y %I:%M:%S %p %Z', 'g:timestamp_rep')
+    let s:timestamp_rep = s:getValue('%F %T', 'g:timestamp_rep')
 
     " Plugin Initialisations.
     let s:modelines	= s:getValue( &modelines, 'g:timestamp_modelines')
@@ -121,7 +151,7 @@ endfunction
 " {{{1 timestamp(): Function that does the timestamping
 function s:timestamp()
     if exists('b:timestamp_disabled') && b:timestamp_disabled
-	return
+			return
     endif
 
     " If running for the first time, initialise script variables.
@@ -176,7 +206,8 @@ function s:subst(start, end, pat, rep)
     while lineno <= a:end
 	let curline = getline(lineno)
 	if match(curline, a:pat) != -1
-	    let newline = substitute( curline, a:pat, a:rep, '' )
+	    " let newline = substitute( curline, a:pat, a:rep, '' )
+	    let newline = py3eval('insert_timestamp.substitute_python( curline, a:pat, a:rep, "" )')
 	    if( newline != curline )
 		" Only substitute if we made a change
 		"silent! undojoin
