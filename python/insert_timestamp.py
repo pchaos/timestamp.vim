@@ -160,11 +160,11 @@ def substitute(astr, patttern, replace, err_return=''):
     df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
     """
     try:
-        print(f"{astr},{patttern},{replace},{err_return}")
+        # print(f"{astr},{patttern},{replace},{err_return}")
         # time.sleep(2)
         rv = re.sub(patttern, replace, astr)
     except Exception as e:
         pattern = "\v((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
-        print(f"exceptipn:{astr},{patttern},{replace},{err_return}")
+        # print(f"exceptipn:{astr},{patttern},{replace},{err_return}")
         rv = re.sub(pattern, replace, astr)
-    return f"{rv=}|{astr=}|{patttern=}|{replace=}"
+    return rv
