@@ -191,10 +191,10 @@ function s:timestamp()
     let l:modelines = (l:modelines == '%') ? line('$') : l:modelines
 
     if line('$') > 2 * l:modelines
-	call s:subst(1, l:modelines, pat, rep)
-	call s:subst(line('$') + 1 - l:modelines, line('$'), pat, rep)
+      call s:subst(1, l:modelines, pat, rep)
+      call s:subst(line('$') + 1 - l:modelines, line('$'), pat, rep)
     else
-	call s:subst(1, line('$'), pat, rep)
+      call s:subst(1, line('$'), pat, rep)
     endif
 endfunction
 

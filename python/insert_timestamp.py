@@ -164,7 +164,11 @@ def substitute(astr, patttern, replace, err_return=''):
         # time.sleep(2)
         rv = re.sub(patttern, replace, astr)
     except Exception as e:
-        pattern = "\v((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
+        pattern = "((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         # print(f"exceptipn:{astr},{patttern},{replace},{err_return}")
         rv = re.sub(pattern, replace, astr)
+        if rv != astr and len(rv) <= len("2022-01-01 01:01:01"):
+            pattern = "\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?"
+            rv = re.sub(pattern, replace, astr)
     return rv
+
