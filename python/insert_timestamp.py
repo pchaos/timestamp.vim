@@ -1,6 +1,6 @@
 """insert timestamp
 
-odified:  2022-07-05T15:43:40
+Modified:  2022-07-05T15:43:40
 """
 
 import datetime
@@ -164,5 +164,6 @@ def substitute(str, patttern, replace, err_return=''):
         # time.sleep(2)
         rv = re.sub(patttern, replace, str)
     except Exception as e:
-        rv=err_return
-    return f"{rv=}|{str=}|{patttern=}|{replace=}"
+        pattern = "\v((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|三 06 7月 2022 10:42:40 下午 PST"
+        rv = re.sub(patttern, replace, str)
+   return f"{rv=}|{str=}|{patttern=}|{replace=}"
