@@ -165,4 +165,4 @@ df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", re
         rv = re.sub(patttern, replace, str)
     except Exception as e:
         rv=err_return
-    return f"{rv}|{str}|{patttern}|{replace}"
+    return f"{rv=}|{str=}|{patttern=}|{replace=}"
