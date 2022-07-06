@@ -157,8 +157,8 @@ def substitute(str, patttern, replace, err_return=''):
     """
     """another solution using string.replace:
     df_replace2 =  df.replace(to_replace = r"(\r)(?![A-Z])", value = "", regex=True)
-df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
-"""
+    df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
+    """
     try:
         print(f"{str},{patttern},{replace},{err_return}")
         # time.sleep(2)

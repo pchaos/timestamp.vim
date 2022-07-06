@@ -81,6 +81,8 @@ function s:initialise()
 		" yyyy-mm-dd HH:mm:SS
 
     let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP', 'g:timestamp_regexp')
+		let s:timestamp_regexp_python="\v((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
+    let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP', 'g:timestamp_regexp_python')
 
     " %c seems to be different on different systems. Use a full form instead.
     " let s:timestamp_rep = s:getValue('%a %d %b %Y %I:%M:%S %p %Z', 'g:timestamp_rep')
