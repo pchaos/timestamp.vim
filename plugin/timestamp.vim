@@ -209,7 +209,7 @@ function s:subst(start, end, pat, rep)
 			if match(curline, a:pat) != -1
 					" let newline = substitute( curline, a:pat, a:rep, '' )
 					" echo curline  a:pat
-					let newline = py3eval("insert_timestamp.substitute_python(vim.eval('curline'), vim.eval('a:pat'), vim.eval('a:rep'), vim.eval('error'))")
+					let newline = py3eval("insert_timestamp.substitute_python(vim.eval('curline'), vim.eval('a:pat'), vim.eval('a:rep'), 'error'))")
 					if( newline != curline )
 						" Only substitute if we made a change
 						"silent! undojoin
