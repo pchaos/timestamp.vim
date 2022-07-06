@@ -152,7 +152,7 @@ def _parse(s):
 def get_local_tz():
     return tzlocal.get_localzone().zone
 
-def substitute_python(str, patttern, replace, err_return=''):
+def substitute(str, patttern, replace, err_return=''):
     """replace with pattern
     """
     """another solution using string.replace:
