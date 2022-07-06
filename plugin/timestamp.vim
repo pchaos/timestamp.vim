@@ -78,14 +78,14 @@ function s:initialise()
 
     " Default timestamp expressions
     " let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}%(\s+[AP]M)?%(\s+\a+)?|TIMESTAMP', 'g:timestamp_regexp')
-		" yyyy-mm-dd HH:mm:SS
 
     let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP', 'g:timestamp_regexp')
-		let s:timestamp_regexp_python="\v((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
-    let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP', 'g:timestamp_regexp_python')
+		" let s:timestamp_regexp_python="\v((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
+    " let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP', 'g:timestamp_regexp_python')
 
     " %c seems to be different on different systems. Use a full form instead.
     " let s:timestamp_rep = s:getValue('%a %d %b %Y %I:%M:%S %p %Z', 'g:timestamp_rep')
+		" yyyy-mm-dd HH:mm:SS
     let s:timestamp_rep = s:getValue('%F %T', 'g:timestamp_rep')
 
     " Plugin Initialisations.
@@ -202,6 +202,9 @@ endfunction
 function s:subst(start, end, pat, rep)
     " make sure this buffer is really in need of timestamp update
     if &modified == 0
+        return
+    endif
+    if exists('g:timestamp_enabled') && g:timestamp_enabled == 0
         return
     endif
 
