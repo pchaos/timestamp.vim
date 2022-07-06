@@ -4,17 +4,20 @@ odified:  2022-07-05T15:43:40
 """
 
 import datetime
-import time
-
-try:
-    import parsedatetime
-except Exception as e:
-    # print(e.Args)
-    print("parsedatetime not found. Please run:\npip install parsedatetime")
-
 import re
 
+import parsedatetime
 import tzlocal
+
+# import time
+
+
+# try:
+#     import parsedatetime
+# except Exception as e:
+#     # print(e.Args)
+#     print("parsedatetime not found. Please run:\npip install parsedatetime")
+
 
 cal = parsedatetime.Calendar()
 
