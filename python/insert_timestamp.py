@@ -166,5 +166,5 @@ def substitute(astr, patttern, replace, err_return=''):
     except Exception as e:
         pattern = "\v((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         print(f"exceptipn:{astr},{patttern},{replace},{err_return}")
-        rv = re.sub(patttern, replace, astr)
+        rv = re.sub(pattern, replace, astr)
     return f"{rv=}|{astr=}|{patttern=}|{replace=}"
