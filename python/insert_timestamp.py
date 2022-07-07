@@ -152,7 +152,7 @@ def _parse(s):
 def get_local_tz():
     return tzlocal.get_localzone().zone
 
-def substitute(astr, patttern, replace, err_return=''):
+def substitute(astr, pattern, replace, err_return=''):
     """replace with pattern
     """
     """another solution using string.replace:
@@ -160,15 +160,15 @@ def substitute(astr, patttern, replace, err_return=''):
     df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
     """
     try:
-        # print(f"{astr},{patttern},{replace},{err_return}")
-        # time.sleep(2)
-        rv = re.sub(patttern, replace, astr)
-    except Exception as e:
-        pattern = "((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
+        # print(f"{astr},{pattern},{replace},{err_return}")
+        # rv = re.sub(pattern, replace, astr)
+        if re.search(pattern, "Modified"):
+            pattern = "((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         # print(f"exceptipn:{astr},{patttern},{replace},{err_return}")
         rv = re.sub(pattern, replace, astr)
         if rv != astr and len(rv) <= len("2022-01-01 01:01:01"):
             pattern = "\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?"
             rv = re.sub(pattern, replace, astr)
+    except Exception as e:
+        rv=err_return
     return rv
-
