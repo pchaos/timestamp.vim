@@ -1,6 +1,6 @@
 """insert timestamp
 
-Modified:  2022-07-05T15:43:40
+odified:  2022-07-05T15:43:40
 """
 
 import datetime
@@ -26,7 +26,7 @@ DATE_FORMAT = '%Y-%m-%d %a'
 TIME_FORMAT = '%H:%M'
 
 
-class DT(object):
+class DT():
     """
     A datetime object that has just date or date and time.
     """
@@ -152,7 +152,7 @@ def _parse(s):
 def get_local_tz():
     return tzlocal.get_localzone().zone
 
-def substitute(astr, pattern, replace, err_return=''):
+def substitute(string, pattern, replace, err_return=''):
     """replace with pattern
     """
     """another solution using string.replace:
@@ -165,10 +165,10 @@ def substitute(astr, pattern, replace, err_return=''):
         if re.search(pattern, "Modified"):
             pattern = "((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         # print(f"exceptipn:{astr},{patttern},{replace},{err_return}")
-        rv = re.sub(pattern, replace, astr)
-        if rv != astr and len(rv) <= len("2022-01-01 01:01:01"):
+        rv = re.sub(pattern, replace, string)
+        if rv != string and len(rv) <= len("2022-01-01 01:01:01"):
             pattern = "\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?"
-            rv = re.sub(pattern, replace, astr)
+            rv = re.sub(pattern, replace, string)
     except Exception as e:
-        rv=err_return
+        rv=f"{err_return},{e.args}"
     return rv
