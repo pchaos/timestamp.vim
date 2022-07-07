@@ -1,6 +1,6 @@
 """insert timestamp
 
-odified:  2022-07-05T15:43:40
+Modified:  2022-07-05T15:43:40
 """
 
 import datetime
@@ -163,7 +163,7 @@ def substitute(string, pattern, replace, err_return=''):
         # print(f"{astr},{pattern},{replace},{err_return}")
         # rv = re.sub(pattern, replace, astr)
         if re.search("Modified", pattern):
-            pattern = "((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
+            pattern = "((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         # print(f"exceptipn:{astr},{patttern},{replace},{err_return}")
         rv = re.sub(pattern, replace, string)
         if rv != string and len(rv) <= len("2022-01-01 01:01:01"):
