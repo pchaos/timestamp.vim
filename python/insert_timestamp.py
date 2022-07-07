@@ -160,14 +160,16 @@ def substitute(string, pattern, replace, err_return=''):
     df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
     """
     try:
-        # print(f"{astr},{pattern},{replace},{err_return}")
+        print(f"{string},{pattern},{replace},{err_return}")
         if re.search("Modified", pattern):
             # perl pattern 不同
             pattern = "((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         rv = re.sub(pattern, replace, string)
+        print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
         if rv != string and len(rv) <= len("2022-01-01 01:01:01"):
             pattern = "\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?"
             rv = re.sub(pattern, replace, string)
+            print(f"rv != ;after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
     except Exception as e:
         rv=f"{err_return},{e.args}, {pattern=}"
     return rv
