@@ -170,5 +170,5 @@ def substitute(string, pattern, replace, err_return=''):
             pattern = "\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?"
             rv = re.sub(pattern, replace, string)
     except Exception as e:
-        rv=f"{err_return},{e.args}"
+        rv=f"{err_return},{e.args}, {pattern=}"
     return rv
