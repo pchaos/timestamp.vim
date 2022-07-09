@@ -1,4 +1,6 @@
 # coding=utf-8
+# Modified: 2022-07-09 23:05:27
+
 import logging
 import os
 import re
@@ -89,8 +91,25 @@ class Insert_timestamp_test(unittest.TestCase):
         self.assertTrue(rv != rv3, "twice replace :{rv==rv3}")
 
     def test_substitute_2(self):
-        pass
+        string= "Modified:  2022-07-07 15:52:56"
+        replacestr = "0000-01-01 01:01:01"
+        rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
+        result_string= "Modified:  0000-01-01 01:01:01"
+        self.assertTrue(rv ==result_string,  'expected result：{rv}  != {result_string}')
 
+    def test_substitute_3(self):
+        string= "Modified:  TIMESTAMP"
+        replacestr = "0000-01-01 01:01:01"
+        rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
+        result_string= "Modified:  0000-01-01 01:01:01"
+        self.assertTrue(rv ==result_string,  'expected result：{rv}  != {result_string}')
+
+    def test_substitute_4(self):
+        string= "Modified:\tTIMESTAMP"
+        replacestr = "0000-01-01 01:01:01"
+        rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
+        result_string= "Modified:\t0000-01-01 01:01:01"
+        self.assertTrue(rv ==result_string,  'expected result：{rv}  != {result_string}')
 
 if __name__ == "__main__":
     unittest.main()
