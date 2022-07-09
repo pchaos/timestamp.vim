@@ -164,7 +164,7 @@ def get_local_tz():
     return tzlocal.get_localzone().zone
 
 
-def substitute(string, pattern, replace, err_return=""):
+def substitute(pattern, replace, string, err_return=""):
     """replace with pattern"""
     """another solution using string.replace:
     df_replace2 =  df.replace(to_replace = r"(\r)(?![A-Z])", value = "", regex=True)

@@ -40,7 +40,7 @@ class Insert_timestamp_test(unittest.TestCase):
         string="Modified: 2022-07-07 19:35:31 ",
     ):
         logger.info(f"{pattern=}\n{replacestr=}\n{string=}")
-        rv = self.substitute(string, pattern, replacestr)
+        rv = self.substitute(pattern, replacestr, string )
         logger.info(f"replaced:{rv}")
         return rv
 
