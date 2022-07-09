@@ -42,6 +42,12 @@ class Insert_timestamp_test(unittest.TestCase):
         logger.info(f"replaced:{rv}")
         return rv
 
+    def _check_search(self, pattern, string):
+        rs = re.search(pattern, string)
+        logger.info(f"checking:{pattern=}\n{string=}")
+        self.assertTrue(rs is not None, "searched:{rs}\n{re.search(pattern, string)=}")
+        return rs
+
     def test_substitute(self):
         rv = self._substitue(self.pattern)
         string = "Modified: 2022-07-07 19:35:31 "
@@ -58,11 +64,13 @@ class Insert_timestamp_test(unittest.TestCase):
         chinese_str = "带中文字符"
         string = f"{chinese_str} {self.string}"
         rv = self._substitue(self.pattern, string=string)
-        rs = re.search(chinese_str, string)
+        logger.info(f"After substitue")
+        rs = re.search(chinese_str, rv)
         self.assertTrue(
             rs is not None,
             "chinese string not found in {rv}:{rs}\n{re.search(chinese_str, string)=}",
         )
+        self._check_search("Modified", rv)
         rs2 = re.search(chinese_str, rv)
         self.assertTrue(rs2 is not None, "chinese string not found in {rv2}:{rs}")
         logger.info(f"chinese_str result::{string} chinese string replaced: {rv} {rs}")
@@ -70,7 +78,19 @@ class Insert_timestamp_test(unittest.TestCase):
     def test_substitute_repalce_twice(self):
         chinese_str = "带中文字符"
         string = f"{chinese_str} {self.string}"
-        rv = self._substitue(self.pattern)
+        rv = self._substitue(self.pattern, string=string)
         pattern = r"\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?"
         rv2 = self._substitue(pattern, string=rv)
-        logger.info(f"return value:{rv}\nreturn vallue2:{rv2}")
+        logger.info(f"return value:'{rv}'\nreturn vallue2:'{rv2}'")
+        self.assertTrue(rv == rv2, "twice replace :{rv==rv2}")
+        replacestr = "0000-01-01 01:01:01"
+        rv3 = self._substitue(pattern, replacestr=replacestr, string=rv)
+        logger.info(f"return vallue3:'{rv3}'")
+        self.assertTrue(rv != rv3, "twice replace :{rv==rv3}")
+
+    def test_substitute_2(self):
+        pass
+
+
+if __name__ == "__main__":
+    unittest.main()

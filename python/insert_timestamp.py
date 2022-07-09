@@ -4,6 +4,7 @@ Modified:  2022-07-07 15:52:56
 """
 
 import datetime
+import logging
 import re
 
 import parsedatetime
@@ -24,6 +25,9 @@ cal = parsedatetime.Calendar()
 
 DATE_FORMAT = "%Y-%m-%d %a"
 TIME_FORMAT = "%H:%M"
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class DT:
@@ -167,16 +171,18 @@ def substitute(string, pattern, replace, err_return=""):
     df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
     """
     try:
-        print(f"{string},{pattern},{replace},{err_return}")
+        # print(f"orgin para:{string},{pattern},{replace},{err_return}")
+        logger.info(f"substitute para:{string},{pattern},{replace},{err_return}")
         if re.search("Modified", pattern):
             # perl pattern 不同
             pattern = r"((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         rv = re.sub(pattern, replace, string)
-        print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
-        if rv != string and len(rv) <= len("2022-01-01 01:01:01"):
+        # print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
+        logger.info(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
+        if rv != string and "TIMESTAMP" not in string:
             pattern = r"\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?"
             rv = re.sub(pattern, replace, string)
-            print(
+            logger.info(
                 f"rv != ;after re.sub: {string},{pattern},{replace},{err_return}, {rv=}"
             )
     except Exception as e:
