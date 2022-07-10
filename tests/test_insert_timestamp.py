@@ -7,16 +7,20 @@ import re
 import sys
 import unittest
 
-print(f"{sys.path=}")
-print(f"{os.path.join('./', '../python')=}")
-if os.path.exists("../python"):
-    sys.path.insert(0, os.path.join("./", "../python"))
-    print(f"insert path:{os.path.join('./', '../python')}")
-elif os.path.exists("python"):
-    sys.path.insert(0, os.path.join("./", "python"))
-    print(f"insert path:{os.path.join('./', 'python')}")
-print(f"{sys.path=}")
 
+def set_syspath():
+    print(f"{sys.path=}")
+    print(f"{os.path.join('./', '../python')=}")
+    if os.path.exists("../python"):
+        sys.path.insert(0, os.path.join("./", "../python"))
+        print(f"insert path:{os.path.join('./', '../python')}")
+    elif os.path.exists("python"):
+        sys.path.insert(0, os.path.join("./", "python"))
+        print(f"insert path:{os.path.join('./', 'python')}")
+    print(f"{sys.path=}")
+
+
+set_syspath()
 import insert_timestamp
 
 logging.basicConfig(level=logging.INFO)
@@ -110,6 +114,14 @@ class Insert_timestamp_test(unittest.TestCase):
         rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
         result_string= "Modified:\t0000-01-01 01:01:01"
         self.assertTrue(rv ==result_string,  'expected result：{rv}  != {result_string}')
+
+    def test_substitute_5(self):
+        string= "; Modified: 2022-07-10 11:25:24 "
+        replacestr = "0000-01-01 01:01:01"
+        rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
+        result_string= "; Modified: 0000-01-01 01:01:01"
+        self.assertTrue(rv ==result_string,  'expected result：{rv}  != {result_string}')
+
 
 if __name__ == "__main__":
     unittest.main()
