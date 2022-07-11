@@ -1,4 +1,4 @@
-" TimeStamp 1.21: Vim plugin for automated time stamping.
+" TimeStamp 1.30: Vim plugin for automated time stamping.
 " Maintainer:	Gautam Iyer <gi1242ATusersDOTsourceforgeDOTnet>
 " Created:	Fri 06 Feb 2004 02:46:27 PM CST
 " Modified:  2022-07-09 23:43:40
