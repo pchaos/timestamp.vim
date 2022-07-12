@@ -1,6 +1,6 @@
 """insert timestamp
 
-Modified:  2022-07-07 15:52:56
+Last modified:  2022-07-07 15:52:56
 """
 
 import datetime
@@ -173,12 +173,12 @@ def substitute(pattern, replace, string, err_return=""):
     try:
         # print(f"orgin para:{string},{pattern},{replace},{err_return}")
         logger.info(f"substitute para:{string},{pattern},{replace},{err_return}")
-        if re.search("Modified", pattern):
+        if re.search("Modified|modified|[cC]hanged", pattern):
             # perl pattern 不同
             pattern = r"((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         rv = re.sub(pattern, replace, string)
         # print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
-        logger.info(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
+        logger.info(f"after re.sub: {string},{pattern},{replace},{err_return}, \n{rv=}")
         if rv != string and "TIMESTAMP" not in string:
             pattern = r"\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?"
             rv = re.sub(pattern, replace, string)
