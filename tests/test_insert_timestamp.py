@@ -30,7 +30,8 @@ logger = logging.getLogger(__name__)
 class Insert_timestamp_test(unittest.TestCase):
     def setUp(self):
         self.substitute = insert_timestamp.substitute
-        self.pattern = r"((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
+        # self.pattern = r"((Last\s+([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
+        self.pattern = r"((Last\s+([cC]hanged?|[mM]odified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         self.string = "Modified: 2022-07-07 19:35:31 "
         logger.info(self.pattern)
 
@@ -95,57 +96,64 @@ class Insert_timestamp_test(unittest.TestCase):
         self.assertTrue(rv != rv3, "twice replace :{rv==rv3}")
 
     def test_substitute_2(self):
-        string= "Modified:  2022-07-07 15:52:56"
+        string = "Modified:  2022-07-07 15:52:56"
         replacestr = "0000-01-01 01:01:01"
         rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
-        result_string= "Modified:  0000-01-01 01:01:01"
+        result_string = "Modified:  0000-01-01 01:01:01"
         self.assertTrue(rv == result_string,  'expected result：{rv}  != {result_string}')
 
     def test_substitute_3(self):
-        string= "Modified:  TIMESTAMP"
+        string = "Modified:  TIMESTAMP"
         replacestr = "0000-01-01 01:01:01"
         rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
-        result_string= "Modified:  0000-01-01 01:01:01"
+        result_string = "Modified:  0000-01-01 01:01:01"
         self.assertTrue(rv == result_string,  'expected result：{rv}  != {result_string}')
 
     def test_substitute_4(self):
-        string= "Modified:\tTIMESTAMP"
+        string = "Modified:\tTIMESTAMP"
         replacestr = "0000-01-01 01:01:01"
         rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
-        result_string= "Modified:\t0000-01-01 01:01:01"
+        result_string = "Modified:\t0000-01-01 01:01:01"
         self.assertTrue(rv == result_string,  'expected result：{rv}  != {result_string}')
 
     def test_substitute_5(self):
-        string= "; Modified: 2022-07-10 11:25:24 "
+        string = "; Modified: 2022-07-10 11:25:24 "
         replacestr = "0000-01-01 01:01:01"
         rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
-        result_string= "; Modified: 0000-01-01 01:01:01"
+        result_string = "; Modified: 0000-01-01 01:01:01"
         self.assertTrue(rv == result_string,  'expected result：{rv}  != {result_string}')
 
     def test_substitute_6(self):
-        string= "-- Last Modified:   2022-07-07 11:32:34 "
+        string = "-- Last Modified:   2022-07-07 11:32:34 "
         replacestr = "0000-01-01 01:01:01"
         rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
         result_string = "-- Last Modified:   0000-01-01 01:01:01"
         self.assertTrue(rv == result_string,  'expected result：{rv}  != {result_string}')
 
     def test_substitute_7(self):
-        string= "-- Last modified:   2022-07-07 11:32:34 "
+        string = "-- Last modified:   2022-07-07 11:32:34 "
         replacestr = "0000-01-01 01:01:01"
         rv = self._substitue(self.pattern, replacestr=replacestr, string=string)
         result_string = "-- Last modified:   0000-01-01 01:01:01"
         self.assertTrue(rv == result_string,  'expected result：{rv}  != {result_string}')
 
     def test_substitute_8(self):
-        string= "-- Last changed:   2022-07-07 11:32:34 "
+        string = "-- Last changed:   2022-07-07 11:32:34 "
         replacestr = "0000-01-01 01:01:01"
-        pattern="abc changed"
+        pattern = "abc changed"
         rv = self._substitue(pattern, replacestr=replacestr, string=string)
         result_string = "-- Last changed:   0000-01-01 01:01:01"
         self.assertTrue(rv == result_string,  'expected result：{rv}  != {result_string}')
 
+        string = "-- Last Changed:   2022-07-07 11:32:34 "
+        replacestr = "0000-01-01 01:01:01"
+        rv = self._substitue(pattern, replacestr=replacestr, string=string)
+        result_string = "-- Last Changed:   0000-01-01 01:01:01"
+        self.assertTrue(rv == result_string,  'expected result：{rv}  != {result_string}')
+
+
         # 不包含'changed'
-        pattern="abc "
+        pattern = "abc "
         rv = self._substitue(pattern, replacestr=replacestr, string=string)
         result_string = "-- Last changed:   0000-01-01 01:01:01"
         self.assertTrue(rv != result_string,  'expected result：{rv}  != {result_string}')
