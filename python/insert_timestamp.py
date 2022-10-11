@@ -1,6 +1,6 @@
 """insert timestamp
 
-Last modified:  2022-07-07 15:52:56
+Last Modified:  2022-07-07 15:52:56
 """
 
 import datetime
@@ -165,7 +165,8 @@ def get_local_tz():
 
 
 def substitute(pattern, replace, string, err_return=""):
-    """replace with pattern"""
+    """replace with pattern
+    """
     """another solution using string.replace:
     df_replace2 =  df.replace(to_replace = r"(\r)(?![A-Z])", value = "", regex=True)
     df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
@@ -173,7 +174,7 @@ def substitute(pattern, replace, string, err_return=""):
     try:
         # print(f"orgin para:{string},{pattern},{replace},{err_return}")
         logger.info(f"substitute para:{string},{pattern},{replace},{err_return}")
-        if re.search("Modified|modified|[cC]hanged", pattern):
+        if re.search("[mM]odified|[cC]hanged", pattern):
             # perl pattern 不同
             pattern = r"((Last\s+([cC]hanged?|[mM]odified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         rv = re.sub(pattern, replace, string)
