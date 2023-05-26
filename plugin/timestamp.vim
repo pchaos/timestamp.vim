@@ -1,7 +1,7 @@
-" TimeStamp 1.30: Vim plugin for automated time stamping.
+" TimeStamp 1.31: Vim plugin for automated time stamping.
 " Maintainer:	Gautam Iyer <gi1242ATusersDOTsourceforgeDOTnet>
 " Created:	Fri 06 Feb 2004 02:46:27 PM CST
-" Modified:  2022-07-09 23:43:40
+" Modified:  2023-05-26 11:34:24
 " License:	This file is placed in the public domain.
 "
 " Credits:	Thanks to Guido Van Hoecke for writing the original vim script
@@ -81,7 +81,6 @@ function s:initialise()
 
     let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\d{4}-\d{2}-\d{2}(\s*|T)\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP', 'g:timestamp_regexp')
 		" let s:timestamp_regexp_python="\v((Last ([cC]hanged?|modified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
-    " let s:timestamp_regexp = s:getValue('\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP', 'g:timestamp_regexp_python')
 
     " %c seems to be different on different systems. Use a full form instead.
     " let s:timestamp_rep = s:getValue('%a %d %b %Y %I:%M:%S %p %Z', 'g:timestamp_rep')
