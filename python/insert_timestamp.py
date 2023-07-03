@@ -3,7 +3,7 @@
     Last Modified:　 2023-07-03 12:04:39
     Created:　 2023-07-03 12:04:39
 
-2.  Pattern matched in first(or last) N lines 
+2.  Pattern must matched in first(or last) N lines 
 
 Last Modified:  2023-07-03 11:42:22
 """
@@ -14,9 +14,6 @@ import re
 
 import parsedatetime
 import tzlocal
-
-# import time
-
 
 # try:
 #     import parsedatetime
@@ -183,7 +180,7 @@ def substitute(pattern, replace, string, err_return=""):
             # perl pattern 不同
             pattern = r"((Last\s+([cC]hanged?|[mM]odified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*|\t?|T)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         rv = re.sub(pattern, replace, string)
-        # print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
+        print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
         logger.info(f"after re.sub: {string},{pattern},{replace},{err_return}, \n{rv=}")
         if rv != string and "TIMESTAMP" not in string:
             pattern = r"\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?"
