@@ -1,6 +1,11 @@
-"""insert timestamp
+"""insert timestamp when 
+1. Pattern match like: 
+    Last Modified:　 2023-07-03 12:04:39
+    Created:　 2023-07-03 12:04:39
 
-Last Modified:  2022-07-07 15:52:56
+2.  Pattern matched in first(or last) N lines 
+
+Last Modified:  2023-07-03 11:42:22
 """
 
 import datetime
@@ -165,8 +170,9 @@ def get_local_tz():
 
 
 def substitute(pattern, replace, string, err_return=""):
-    """replace with pattern"""
-    """another solution using string.replace:
+    """replace with pattern
+
+    another solution using string.replace:
     df_replace2 =  df.replace(to_replace = r"(\r)(?![A-Z])", value = "", regex=True)
     df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
     """
