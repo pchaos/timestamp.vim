@@ -1,7 +1,7 @@
 " TimeStamp 1.31: Vim plugin for automated time stamping.
 " Maintainer:	Gautam Iyer <gi1242ATusersDOTsourceforgeDOTnet>
 " Created:	Fri 06 Feb 2004 02:46:27 PM CST
-" Modified:  2023-07-03 15:20:22
+" Modified:  2023-07-03 15:37:05
 " License:	This file is placed in the public domain.
 "
 " Credits:	Thanks to Guido Van Hoecke for writing the original vim script
@@ -228,7 +228,8 @@ function s:subst(start, end, pat, rep)
                 " 用python正则表达式替换“时间”为“00:00:00”
                 let pattern = "\d{2}:\d{2}:\d{2}"
                 let replacement = "00:00:00"
-                let newline2 = py3eval("insert_timestamp.substitute(vim.eval('a:pattern'), vim.eval('a:replacement'), vim.eval('a:newline') )")
+                " let newline2 = py3eval("insert_timestamp.substitute(vim.eval('a:pattern'), vim.eval('a:replacement'), vim.eval('a:newline') )")
+                let newline2 = py3eval("insert_timestamp.substitute(pattern, replacement, a:newline)")
                 let newline = newline2
               catch /.*/
                 echo "Caught error: " . v:exception
