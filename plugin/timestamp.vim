@@ -1,7 +1,7 @@
 " TimeStamp 1.31: Vim plugin for automated time stamping.
 " Maintainer:	Gautam Iyer <gi1242ATusersDOTsourceforgeDOTnet>
 " Created:	Fri 06 Feb 2004 02:46:27 PM CST
-" Modified:  2023-07-03 16:03:59
+" Modified:  2023-07-03 16:22:53
 " License:	This file is placed in the public domain.
 "
 " Credits:	Thanks to Guido Van Hoecke for writing the original vim script
@@ -160,7 +160,7 @@ function s:timestamp()
     if !exists('s:timestamp_regexp')
 	call s:initialise()
 
-	" Free up memory.
+	" Free upCaught error: Vim(call):E117: 未知的函数：py3  memory.
 	delfunction s:initialise
 	delfunction s:getValue
     endif
@@ -205,8 +205,8 @@ endfunction
 
 
 " {{{1 subst( start, end, pat, rep): substitute on range start - end.
+" make sure this buffer is really in need of timestamp update
 function s:subst(start, end, pat, rep)
-    " make sure this buffer is really in need of timestamp update
     if &modified == 0
         return
     endif
@@ -226,7 +226,7 @@ function s:subst(start, end, pat, rep)
               try
                 " replace datetime stamp using format: "yyyy-mm-dd 00:00:00"
                 " 用python正则表达式替换“时间”为“00:00:00”
-                let pattern = "\d{2}:\d{2}:\d{2}"
+                let pattern = '\d{2}:\d{2}:\d{2}'
                 let replacement = "00:00:00"
                 " let newline2 = py3eval("insert_timestamp.substitute(vim.eval('a:pattern'), vim.eval('a:replacement'), vim.eval('a:newline') )")
                 let newline2 = py3eval("insert_timestamp.substitute('" . pattern . "', '" . replacement . "', '" . newline . "')")
@@ -235,7 +235,7 @@ function s:subst(start, end, pat, rep)
                 echo "Caught error: " . v:exception
                 echo "----" . newline2
               finally
-                echo "----" . newline
+                echo "---- " . newline
               endtry
             endif
 						" Only substitute if we made a change
