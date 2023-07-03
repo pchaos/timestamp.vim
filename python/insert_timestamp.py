@@ -174,7 +174,7 @@ def substitute(pattern, replace, string, err_return=""):
     df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
     """
     try:
-        # print(f"orgin para:{string},{pattern},{replace},{err_return}")
+        print(f"orgin para:{string},{pattern},{replace},{err_return}")
         logger.info(f"substitute para:{string},{pattern},{replace},{err_return}")
         if re.search("[mM]odified|[cC]hanged", pattern):
             # perl pattern 不同

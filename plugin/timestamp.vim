@@ -1,7 +1,7 @@
 " TimeStamp 1.31: Vim plugin for automated time stamping.
 " Maintainer:	Gautam Iyer <gi1242ATusersDOTsourceforgeDOTnet>
 " Created:	Fri 06 Feb 2004 02:46:27 PM CST
-" Modified:  2023-07-03 15:06:51
+" Modified:  2023-07-03 15:20:22
 " License:	This file is placed in the public domain.
 "
 " Credits:	Thanks to Guido Van Hoecke for writing the original vim script
@@ -223,11 +223,19 @@ function s:subst(start, end, pat, rep)
 					let newline = py3eval("insert_timestamp.substitute(vim.eval('a:pat'), vim.eval('a:rep'), vim.eval('curline') )")
 					if( newline != curline )
             if tolower(s:getCurrentFileName()) ==# "readme.md"
-              " replace datetime stamp using format: "yyyy-mm-dd 00:00:00"
-              " 用python正则表达式替换“时间”为“00:00:00”
-              let pattern = "\d{2}:\d{2}:\d{2}"
-              let replacement = "00:00:00"
-              let newline = py3eval("insert_timestamp.substitute(vim.eval('a:patttern'), vim.eval('a:replacement'), vim.eval('a:newline') )")
+              try
+                " replace datetime stamp using format: "yyyy-mm-dd 00:00:00"
+                " 用python正则表达式替换“时间”为“00:00:00”
+                let pattern = "\d{2}:\d{2}:\d{2}"
+                let replacement = "00:00:00"
+                let newline2 = py3eval("insert_timestamp.substitute(vim.eval('a:pattern'), vim.eval('a:replacement'), vim.eval('a:newline') )")
+                let newline = newline2
+              catch /.*/
+                echo "Caught error: " . v:exception
+                echo "----" . newline2
+              finally
+                echo "----" . newline
+              endtry
             endif
 						" Only substitute if we made a change
 						"silent! undojoin
