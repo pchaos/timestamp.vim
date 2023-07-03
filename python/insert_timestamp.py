@@ -174,13 +174,13 @@ def substitute(pattern, replace, string, err_return=""):
     df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
     """
     try:
-        print(f"orgin para:{string},{pattern},{replace},{err_return}")
+        # print(f"orgin para:{string},{pattern},{replace},{err_return}")
         logger.info(f"substitute para:{string},{pattern},{replace},{err_return}")
         if re.search("[mM]odified|[cC]hanged", pattern):
             # perl pattern 不同
             pattern = r"((Last\s+([cC]hanged?|[mM]odified)|Modified)\s*:\s+)\d{4}-\d{2}-\d{2}(\s*|\t?|T)?\d{2}:\d{2}:\d{2}(\s*)?|TIMESTAMP"
         rv = re.sub(pattern, replace, string)
-        print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
+        # print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
         logger.info(f"after re.sub: {string},{pattern},{replace},{err_return}, \n{rv=}")
         if rv != string and "TIMESTAMP" not in string:
             pattern = r"\d{4}-\d{2}-\d{2}(\s*|T)?\d{2}:\d{2}:\d{2}(\s*)?"
@@ -188,6 +188,24 @@ def substitute(pattern, replace, string, err_return=""):
             logger.info(
                 f"rv != ;after re.sub: {string},{pattern},{replace},{err_return}, {rv=}"
             )
+    except Exception as e:
+        rv = f"{err_return},{e.args}, {pattern=}"
+    return rv
+
+
+def substitute_day(pattern, replace, string, err_return=""):
+    """replace with pattern for DATE_FORMAT
+
+    another solution using string.replace:
+    df_replace2 =  df.replace(to_replace = r"(\r)(?![A-Z])", value = "", regex=True)
+    df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
+    """
+    try:
+        print(f"orgin para:{string},{pattern},{replace},{err_return}")
+        logger.info(f"substitute para:{string},{pattern},{replace},{err_return}")
+        rv = re.sub(pattern, replace, string)
+        print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
+        logger.info(f"after re.sub: {string},{pattern},{replace},{err_return}, \n{rv=}")
     except Exception as e:
         rv = f"{err_return},{e.args}, {pattern=}"
     return rv
