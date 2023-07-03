@@ -201,10 +201,10 @@ def substitute_day(pattern, replace, string, err_return=""):
     df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
     """
     try:
-        print(f"orgin para:{string},{pattern},{replace},{err_return}")
+        # print(f"orgin para:{string},{pattern},{replace},{err_return}")
         logger.info(f"substitute para:{string},{pattern},{replace},{err_return}")
         rv = re.sub(pattern, replace, string)
-        print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
+        # print(f"after re.sub: {string},{pattern},{replace},{err_return}, {rv=}")
         logger.info(f"after re.sub: {string},{pattern},{replace},{err_return}, \n{rv=}")
     except Exception as e:
         rv = f"{err_return},{e.args}, {pattern=}"
