@@ -44,8 +44,8 @@ make the first few lines: >
 
 When you first write the file, these lines will change to: >
 
-    Created  : Thu 26 Feb 2004 03:15:54 PM CST
-    Modified : Thu 26 Feb 2004 03:15:54 PM CST
+    Created:            2023-07-03 19:59:07
+    Last Modified:      2023-07-03 19:59:07
 
 On subsequent writes of the file, the first line will remain unchanged and the
 second will be stamped with the time of writing.
@@ -264,6 +264,8 @@ If this is set to to '%' all lines in the file will be searched for the regexp
 ------------------------------------------------------------------------------
 
 7. Change History					*timestamp_history*
+Version 1.30:~
+  Rewrited by python
 
 Version 1.21:~
   Add |DisableTimestamp|, |EnableTimestamp| and |b:timestamp_disable| to
