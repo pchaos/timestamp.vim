@@ -1,7 +1,7 @@
 " TimeStamp 1.31: Vim plugin for automated time stamping.
 " Maintainer:	Gautam Iyer <gi1242ATusersDOTsourceforgeDOTnet>
 " Created:	Fri 06 Feb 2004 02:46:27 PM CST
-" Modified:  2023-07-03 12:22:29
+" Modified:  2023-07-03 14:28:31
 " License:	This file is placed in the public domain.
 "
 " Credits:	Thanks to Guido Van Hoecke for writing the original vim script
@@ -222,12 +222,12 @@ function s:subst(start, end, pat, rep)
 					" echo curline  a:pat
 					let newline = py3eval("insert_timestamp.substitute(vim.eval('a:pat'), vim.eval('a:rep'), vim.eval('curline') )")
 					if( newline != curline )
-            if tolower(getCurrentFileName()) == "readme.md"
+            if tolower(call s:getCurrentFileName()) == "readme.md"
+              " replace datetime stamp using format: "yyyy-mm-dd 00:00:00"
               " 用python正则表达式替换“时间”为“00:00:00”
               let pattern = r"\d{2}:\d{2}:\d{2}"
-          let replacement = "00:00:00"
-					let newline = py3eval("insert_timestamp.substitute(im.eval('a:patttern'), vim.eval('a:replacement'), vim.eval('a:newline') )")
-              " replace datetime stamp using format: "yyyy-mm-dd 00:00:00"
+              let replacement = "00:00:00"
+              let newline = py3eval("insert_timestamp.substitute(im.eval('a:patttern'), vim.eval('a:replacement'), vim.eval('a:newline') )")
             endif
 						" Only substitute if we made a change
 						"silent! undojoin
