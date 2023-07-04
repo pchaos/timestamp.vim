@@ -196,9 +196,10 @@ def substitute(pattern, replace, string, err_return=""):
 def substitute_day(pattern, replace, string, err_return=""):
     """replace with pattern for DATE_FORMAT
 
-    another solution using string.replace:
-    df_replace2 =  df.replace(to_replace = r"(\r)(?![A-Z])", value = "", regex=True)
-    df_replace3 = df_replace2.replace(to_replace = r"(\r)(?![a-z])", value = " ", regex=True)
+        string = "-- Last modified:   2023-07-03 11:32:34 "
+        replacestr = "01:01:01"
+        pattern = r"\d{2}:\d{2}:\d{2}"
+        rv = substitue_day(pattern, replacestr=replacestr, string=string)
     """
     try:
         # print(f"orgin para:{string},{pattern},{replace},{err_return}")
